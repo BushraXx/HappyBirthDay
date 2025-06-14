@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Love Letter for Crush</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* General Styles */
+      * {
+        box-sizing: border-box;
+      }
+      
+      body {
+        margin: 0;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f0e6f6;
+        font-family: "Dancing Script", cursive;
+        overflow-x: hidden;
+        touch-action: manipulation;
+      }
+
+      /* Instruction Title */
+      .instruction {
+        font-size: 1.5rem;
+        color: #e60073;
+        margin: 10px 0 20px;
+        text-align: center;
+        animation: pulse 2s infinite, float 3s ease-in-out infinite;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        padding: 0 10px;
+        width: 100%;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+        100% { transform: translateY(0px); }
+      }
+
+      /* Background Animation */
+      @keyframes bgAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+        background-size: 400% 400%;
+        animation: bgAnimation 10s ease infinite;
+        z-index: -1;
+      }
+
+      /* Envelope Styles */
+      #envelope {
+        position: relative;
+        width: 280px;
+        height: 160px;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+        background-color: #d9534f;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        margin: 0 auto;
+      }
+
+      .front {
+        position: absolute;
+        width: 0;
+        height: 0;
+        z-index: 3;
+      }
+
+      .flap {
+        border-left: 140px solid transparent;
+        border-right: 140px solid transparent;
+        border-bottom: 80px solid transparent;
+        border-top: 95px solid #d9534f;
+        transform-origin: top;
+        pointer-events: none;
+      }
+
+      .pocket {
+        border-left: 140px solid #f5a3a2;
+        border-right: 140px solid #f5a3a2;
+        border-bottom: 80px solid #ff6f61;
+        border-top: 80px solid transparent;
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+
+      .letter {
+        position: relative;
+        background-color: #fff;
+        width: 90%;
+        margin: 0 auto;
+        height: 90%;
+        top: 5%;
+        border-radius: 4px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .words {
+        position: absolute;
+        left: 10%;
+        width: 80%;
+        background-color: #ffe6e6;
+      }
+
+      .words.line1 {
+        top: 10%;
+        font-size: 0.9rem;
+        width: 25%;
+        height: 7%;
+      }
+
+      .words.line2 {
+        top: 30%;
+        text-align: center;
+        font-size: 1.2rem;
+        height: 12%;
+      }
+
+      .words.line3 {
+        top: 50%;
+        font-size: 1.2rem;
+        text-align: center;
+        height: 12%;
+      }
+
+      .words.line4 {
+        top: 70%;
+        font-size: 1.2rem;
+        text-align: center;
+        height: 12%;
+      }
+
+      .open .flap {
+        transform: rotateX(180deg);
+        transition: transform 0.4s ease, z-index 0.6s;
+        z-index: 1;
+      }
+
+      .close .flap {
+        transform: rotateX(0deg);
+        transition: transform 0.4s 0.6s ease, z-index 1s;
+        z-index: 5;
+      }
+
+      .close .letter {
+        transform: translateY(0px);
+        transition: transform 0.4s ease, z-index 1s;
+        z-index: 1;
+      }
+
+      .open .letter {
+        transform: translateY(-100px);
+        transition: transform 0.4s 0.6s ease, z-index 0.6s;
+        z-index: 2;
+      }
+
+      .hearts {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        z-index: 2;
+      }
+
+      .heart {
+        position: absolute;
+        bottom: 0;
+        right: 10%;
+        pointer-events: none;
+      }
+
+      .heart:before,
+      .heart:after {
+        position: absolute;
+        content: "";
+        left: 25px;
+        top: 0;
+        width: 25px;
+        height: 40px;
+        background: #e60073;
+        border-radius: 25px 25px 0 0;
+        transform: rotate(-45deg);
+        transform-origin: 0 100%;
+      }
+
+      .heart:after {
+        left: 0;
+        transform: rotate(45deg);
+        transform-origin: 100% 100%;
+      }
+
+      .close .heart {
+        opacity: 0;
+        animation: none;
+      }
+
+      .a1 {
+        left: 15%;
+        transform: scale(0.6);
+      }
+
+      .a2 {
+        left: 50%;
+        transform: scale(0.8);
+      }
+
+      .a3 {
+        left: 5%;
+        transform: scale(0.7);
+      }
+
+      /* Balloon Styles */
+      .balloon {
+        position: fixed;
+        font-size: 1.5rem;
+        animation: floatUp 3s ease-in-out forwards;
+        z-index: 100;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh);
+          opacity: 0;
+        }
+      }
+      
+      /* Gift Button Styles */
+      .gift-button {
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #e60073;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-family: "Dancing Script", cursive;
+        font-size: 1.3rem;
+        cursor: pointer;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+        transition: all 0.3s ease;
+        z-index: 10;
+        width: auto;
+        max-width: 90%;
+      }
+      
+      .gift-button:hover {
+        background-color: #ff3399;
+        transform: scale(1.03);
+      }
+      
+      .envlope-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+
+      /* Mobile-specific adjustments */
+      @media (max-width: 350px) {
+        #envelope {
+          width: 240px;
+          height: 140px;
+        }
+        
+        .flap {
+          border-left: 120px solid transparent;
+          border-right: 120px solid transparent;
+          border-top: 85px solid #d9534f;
+        }
+        
+        .pocket {
+          border-left: 120px solid #f5a3a2;
+          border-right: 120px solid #f5a3a2;
+          border-bottom: 70px solid #ff6f61;
+          border-top: 70px solid transparent;
+        }
+        
+        .instruction {
+          font-size: 1.3rem;
+        }
+        
+        .words.line2,
+        .words.line3,
+        .words.line4 {
+          font-size: 1.1rem;
+        }
+        
+        .open .letter {
+          transform: translateY(-80px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Instruction Title -->
+    <div class="instruction">Click on the letter to read it 💌</div>
+
+    <!-- Envelope Structure -->
+    <div class="envlope-wrapper">
+      <div id="envelope" class="close">
+        <div class="front flap"></div>
+        <div class="front pocket"></div>
+        <div class="letter">
+          <div class="words line1">To:Lemoni</div>
+          <div class="words line2">Happy Birthday</div>
+          <div class="words line3">Every year with you is</div>
+          <div class="words line4">better,I love u</div>
+        </div>
+            
+        <div class="hearts">
+          <div class="heart a1"></div>
+          <div class="heart a2"></div>
+          <div class="heart a3"></div>
+        </div>
+      </div>
+      <button class="gift-button" id="giftButton">Click here for a gift 🎁</button>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var envelope = $("#envelope");
+
+        // Handle both click and touch events for mobile
+        envelope.on('click touchstart', function (e) {
+          e.preventDefault();
+          if (envelope.hasClass("close")) {
+            envelope.removeClass("close").addClass("open");
+
+            // Create and add balloons
+            for (let i = 0; i < 15; i++) {
+              setTimeout(() => {
+                const balloon = document.createElement("div");
+                balloon.className = "balloon";
+                balloon.innerHTML = "🎈🍋";
+                balloon.style.left = Math.random() * 90 + "vw";
+                balloon.style.fontSize = (Math.random() * 20 + 15) + "px";
+                balloon.style.animationDuration = (Math.random() * 2 + 2) + "s";
+                document.body.appendChild(balloon);
+
+                // Remove balloon after animation
+                setTimeout(() => {
+                  balloon.remove();
+                }, 3000);
+              }, i * 200);
+            }
+          } else {
+            envelope.removeClass("open").addClass("close");
+          }
+        });
+
+        // Gift button functionality - redirect to cake.html
+        document.getElementById('giftButton').addEventListener('click', function() {
+          window.location.href = "cake.html";
+        });
+      });
+    </script>
+  </body>
+</html>
